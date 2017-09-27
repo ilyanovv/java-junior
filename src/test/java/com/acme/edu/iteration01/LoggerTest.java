@@ -84,7 +84,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         //endregion
     }
 
-   /* @Test
+    @Test
     public void shouldLogBoolean() throws IOException {
         //region when
         Logger.log(true);
@@ -108,5 +108,5 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         assertSysoutContains("reference: ");
         assertSysoutContains("@");
         //endregion
-    }*/
+    }
 }
