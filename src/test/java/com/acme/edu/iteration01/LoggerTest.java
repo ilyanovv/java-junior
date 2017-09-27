@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.io.*;
 
 public class LoggerTest implements SysoutCaptureAndAssertionAbility {
+    private final String NEW_LINE = System.lineSeparator();
     //region given
     @Before
     public void setUpSystemOut() throws IOException {
@@ -32,7 +33,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
 
         //region then
         assertSysoutContains("primitive: ");
-        assertSysoutEquals("primitive: 1\r\nprimitive: 0\r\nprimitive: -1\r\n");
+        assertSysoutEquals("primitive: 1" + NEW_LINE + "primitive: 0" + NEW_LINE + "primitive: -1" + NEW_LINE);
         //endregion
     }
 
@@ -52,8 +53,8 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         //endregion
     }
 
-    /*
-    TODO: implement Logger solution to match specification as tests
+
+    //TODO: implement Logger solution to match specification as tests
 
     @Test
     public void shouldLogChar() throws IOException {
@@ -83,7 +84,7 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         //endregion
     }
 
-    @Test
+   /* @Test
     public void shouldLogBoolean() throws IOException {
         //region when
         Logger.log(true);
@@ -107,7 +108,5 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         assertSysoutContains("reference: ");
         assertSysoutContains("@");
         //endregion
-    }
-
-    */
+    }*/
 }
