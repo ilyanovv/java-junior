@@ -11,7 +11,7 @@ public class Logger {
     private static PrintStream printStream = System.out;
 
     public static void log(int message) {
-        System.out.println(PRIMITIVE_PREFIX + message);
+        printStream.println(PRIMITIVE_PREFIX + message);
     }
 
     public static void log(byte message) {
