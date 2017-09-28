@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 public class LoggerTest implements SysoutCaptureAndAssertionAbility {
+    private final String NEW_LINE = System.lineSeparator();
     //region given
     @Before
     public void setUpSystemOut() throws IOException {
@@ -22,10 +23,10 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     }
     //endregion
 
-    /*
-    TODO: implement Logger solution to match specification as tests
 
-    @Test
+    //TODO: implement Logger solution to match specification as tests
+
+   @Test
     public void shouldLogIntegersArray() throws IOException {
         //region when
         Logger.log(new int[] {-1, 0, 1});
@@ -33,11 +34,12 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
 
         //region then
         assertSysoutEquals(
-            "primitives array: {-1, 0, 1}\n"
+            "primitives array: {-1, 0, 1}" + NEW_LINE
         );
         //endregion
     }
 
+    /*
     @Test
     public void shouldLogIntegersMatrix() throws IOException {
         //region when
@@ -46,11 +48,11 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
 
         //region then
         assertSysoutEquals(
-            "primitives matrix: {\n" +
-                "{-1, 0, 1}\n" +
-                "{1, 2, 3}\n" +
-                "{-1, -2, -3}\n" +
-            "}\n"
+            "primitives matrix: {" + NEW_LINE  +
+                "{-1, 0, 1}" + NEW_LINE +
+                "{1, 2, 3}" + NEW_LINE +
+                "{-1, -2, -3}" + NEW_LINE +
+            "}" + NEW_LINE
         );
         //endregion
     }
@@ -63,11 +65,11 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
 
         //region then
         assertSysoutEquals(
-            "primitives multimatrix: {\n" +
-                "{\n" + "{\n" + "{\n" +
-                    "0\n" +
-                "}\n" + "}\n" + "}\n" +
-            "}\n"
+            "primitives multimatrix: {" + NEW_LINE +
+                "{" + NEW_LINE +  "{" + NEW_LINE + "{" + NEW_LINE +
+                    "0" + NEW_LINE +
+                "}" + NEW_LINE + "}" + NEW_LINE + "}" + NEW_LINE +
+            "}" + NEW_LINE
         );
         //endregion
     }
@@ -109,7 +111,6 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         assertSysoutContains(Integer.MAX_VALUE - 10);
         assertSysoutContains(11);
         //endregion
-    }
+    }*/
 
-    */
 }

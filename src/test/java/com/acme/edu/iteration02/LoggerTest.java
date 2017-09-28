@@ -9,6 +9,7 @@ import org.junit.Test;
 import java.io.IOException;
 
 public class LoggerTest implements SysoutCaptureAndAssertionAbility {
+    private final String NEW_LINE = System.lineSeparator();
     //region given
     @Before
     public void setUpSystemOut() throws IOException {
@@ -23,8 +24,8 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
     //endregion
 
 
-    /*
-    TODO: implement Logger solution to match specification as tests
+
+    //TODO: implement Logger solution to match specification as tests
 
     @Test
     public void shouldLogSequentIntegersAsSum() throws IOException {
@@ -34,15 +35,14 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         Logger.log(2);
         Logger.log("str 2");
         Logger.log(0);
+        Logger.close();
         //endregion
 
         //region then
-        assertSysoutEquals(
-            "str 1\n" +
-            "3\n" +
-            "str 2\n" +
-            "0\n"
-        );
+        assertSysoutContains(Logger.STRING_PREFIX + "str 1" + NEW_LINE);
+        assertSysoutContains(Logger.PRIMITIVE_PREFIX + "3" + NEW_LINE);
+        assertSysoutContains(Logger.STRING_PREFIX + "str 2" + NEW_LINE);
+        assertSysoutContains(Logger.PRIMITIVE_PREFIX + "0" + NEW_LINE);
         //endregion
     }
 
@@ -54,16 +54,15 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         Logger.log(Integer.MAX_VALUE);
         Logger.log("str 2");
         Logger.log(0);
+        Logger.close();
         //endregion
 
         //region then
-        assertSysoutEquals(
-            "str 1\n" +
-            "10\n" +
-            Integer.MAX_VALUE + "\n" +
-            "str 2\n" +
-            "0\n"
-        );
+        assertSysoutContains("str 1" + NEW_LINE);
+        assertSysoutContains(Integer.MAX_VALUE + NEW_LINE);
+        assertSysoutContains("10" + NEW_LINE);
+        assertSysoutContains("str 2" + NEW_LINE);
+        assertSysoutContains("0" + NEW_LINE);
         //endregion
     }
 
@@ -75,16 +74,15 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         Logger.log((byte)Byte.MAX_VALUE);
         Logger.log("str 2");
         Logger.log(0);
+        Logger.close();
         //endregion
 
         //region then
-        assertSysoutEquals(
-            "str 1\n" +
-            "10\n" +
-            Byte.MAX_VALUE + "\n" +
-            "str 2\n" +
-            "0\n"
-        );
+        assertSysoutContains("str 1" + NEW_LINE);
+        assertSysoutContains(Byte.MAX_VALUE + NEW_LINE);
+        assertSysoutContains("10" + NEW_LINE);
+        assertSysoutContains("str 2" + NEW_LINE);
+        assertSysoutContains("0" + NEW_LINE);
         //endregion
     }
 
@@ -99,18 +97,15 @@ public class LoggerTest implements SysoutCaptureAndAssertionAbility {
         Logger.log("str 3");
         Logger.log("str 3");
         Logger.log("str 3");
+        Logger.close();
         //endregion
 
         //region then
-        assertSysoutEquals(
-            "str 1\n" +
-            "str 2 (x2)\n" +
-            "0\n" +
-            "str 2\n" +
-            "str 3 (x3)\n"
-        );
+        assertSysoutContains("str 1" + NEW_LINE);
+        assertSysoutContains("str 2 (x2)" + NEW_LINE);
+        assertSysoutContains("0" + NEW_LINE);
+        assertSysoutContains("str 2" + NEW_LINE);
+        assertSysoutContains("str 3 (x3)" + NEW_LINE);
         //endregion
     }
-
-    */
 }
