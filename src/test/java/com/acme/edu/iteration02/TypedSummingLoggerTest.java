@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility {
     private final String NEW_LINE = System.lineSeparator();
+    private final TypedSummingLogger logger = new TypedSummingLogger();
     //region given
     @Before
     public void setUpSystemOut() throws IOException {
@@ -26,12 +27,12 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     @Test
     public void shouldLogSequentIntegersAsSum() throws IOException {
         //region when
-        TypedSummingLogger.log("str 1");
-        TypedSummingLogger.log(1);
-        TypedSummingLogger.log(2);
-        TypedSummingLogger.log("str 2");
-        TypedSummingLogger.log(0);
-        TypedSummingLogger.close();
+        logger.log("str 1");
+        logger.log(1);
+        logger.log(2);
+        logger.log("str 2");
+        logger.log(0);
+        logger.close();
         //endregion
 
         //region then
@@ -45,12 +46,12 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     @Test
     public void shouldLogCorrectlyIntegerOverflowWhenSequentIntegers() {
         //region when
-        TypedSummingLogger.log("str 1");
-        TypedSummingLogger.log(10);
-        TypedSummingLogger.log(Integer.MAX_VALUE);
-        TypedSummingLogger.log("str 2");
-        TypedSummingLogger.log(0);
-        TypedSummingLogger.close();
+        logger.log("str 1");
+        logger.log(10);
+        logger.log(Integer.MAX_VALUE);
+        logger.log("str 2");
+        logger.log(0);
+        logger.close();
         //endregion
 
         //region then
@@ -65,12 +66,12 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     @Test
     public void shouldLogCorrectlyByteOverflowWhenSequentBytes() {
         //region when
-        TypedSummingLogger.log("str 1");
-        TypedSummingLogger.log((byte)10);
-        TypedSummingLogger.log((byte)Byte.MAX_VALUE);
-        TypedSummingLogger.log("str 2");
-        TypedSummingLogger.log(0);
-        TypedSummingLogger.close();
+        logger.log("str 1");
+        logger.log((byte)10);
+        logger.log((byte)Byte.MAX_VALUE);
+        logger.log("str 2");
+        logger.log(0);
+        logger.close();
         //endregion
 
         //region then
@@ -85,15 +86,15 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     @Test
     public void shouldLogSameSubsequentStringsWithoutRepeat() throws IOException {
         //region when
-        TypedSummingLogger.log("str 1");
-        TypedSummingLogger.log("str 2");
-        TypedSummingLogger.log("str 2");
-        TypedSummingLogger.log(0);
-        TypedSummingLogger.log("str 2");
-        TypedSummingLogger.log("str 3");
-        TypedSummingLogger.log("str 3");
-        TypedSummingLogger.log("str 3");
-        TypedSummingLogger.close();
+        logger.log("str 1");
+        logger.log("str 2");
+        logger.log("str 2");
+        logger.log(0);
+        logger.log("str 2");
+        logger.log("str 3");
+        logger.log("str 3");
+        logger.log("str 3");
+        logger.close();
         //endregion
 
         //region then

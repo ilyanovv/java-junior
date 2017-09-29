@@ -10,6 +10,7 @@ import java.io.*;
 
 public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility {
     private final String NEW_LINE = System.lineSeparator();
+    private final TypedSummingLogger logger = new TypedSummingLogger();
     //region given
     @Before
     public void setUpSystemOut() throws IOException {
@@ -26,10 +27,10 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     @Test
     public void shouldLogInteger() throws IOException {
         //region when
-        TypedSummingLogger.log(1);
-        TypedSummingLogger.log(0);
-        TypedSummingLogger.log(-1);
-        TypedSummingLogger.close();
+        logger.log(1);
+        logger.log(0);
+        logger.log(-1);
+        logger.close();
         //endregion
 
         //region then
@@ -40,10 +41,10 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     @Test
     public void shouldLogByte() throws IOException {
         //region when
-        TypedSummingLogger.log((byte)1);
-        TypedSummingLogger.log((byte)0);
-        TypedSummingLogger.log((byte)-1);
-        TypedSummingLogger.close();
+        logger.log((byte)1);
+        logger.log((byte)0);
+        logger.log((byte)-1);
+        logger.close();
         //endregion
 
         //region then
@@ -54,9 +55,9 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     @Test
     public void shouldLogChar() throws IOException {
         //region when
-        TypedSummingLogger.log('a');
-        TypedSummingLogger.log('b');
-        TypedSummingLogger.close();
+        logger.log('a');
+        logger.log('b');
+        logger.close();
         //endregion
 
         //region then
@@ -69,9 +70,9 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     @Test
     public void shouldLogString() throws IOException {
         //region when
-        TypedSummingLogger.log("test string 1");
-        TypedSummingLogger.log("other str");
-        TypedSummingLogger.close();
+        logger.log("test string 1");
+        logger.log("other str");
+        logger.close();
         //endregion
 
         //region then
@@ -84,9 +85,9 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     @Test
     public void shouldLogBoolean() throws IOException {
         //region when
-        TypedSummingLogger.log(true);
-        TypedSummingLogger.log(false);
-        TypedSummingLogger.close();
+        logger.log(true);
+        logger.log(false);
+        logger.close();
         //endregion
 
         //region then
@@ -99,8 +100,8 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     @Test
     public void shouldLogReference() throws IOException {
         //region when
-        TypedSummingLogger.log(new Object());
-        TypedSummingLogger.close();
+        logger.log(new Object());
+        logger.close();
         //endregion
 
         //region then

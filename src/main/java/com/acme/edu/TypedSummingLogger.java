@@ -9,23 +9,34 @@ public class TypedSummingLogger {
     public final static String STRING_PREFIX = "string: ";
     public final static String PRIMITIVES_ARRAY_PREFIX = "primitives array: ";
 
-    private static int sumInteger;
-    private static byte sumByte;
-    private static int overflowCount;
-    private static String currentString;
-    private static int subsequentStringsCount;
-    private static char currentChar;
-    private static boolean currentBoolean;
-    private static Object currentReference;
-    private static int[] currentArray;
+    private Saver saver;
+
+    private int sumInteger;
+    private byte sumByte;
+    private int overflowCount;
+    private String currentString;
+    private int subsequentStringsCount;
+    private char currentChar;
+    private boolean currentBoolean;
+    private Object currentReference;
+    private int[] currentArray;
 
     private static LoggerState state = LoggerState.DEFAULT_STATE;
 
+    public TypedSummingLogger() {
+        saver = new Saver();
+    }
+
+    public TypedSummingLogger(Saver saver) {
+        this.saver = saver;
+    }
+
     /**
      * The method prepares int or the sum of sequential ints for writing.
+     *
      * @param message The int to be written or summed up.
      */
-    public static void log(int message) {
+    public void log(int message) {
         if (state != LoggerState.INTEGER_STATE) {
             printBuffer();
             state = LoggerState.INTEGER_STATE;
@@ -37,9 +48,10 @@ public class TypedSummingLogger {
 
     /**
      * The method prepares byte or the sum of sequential bytes for writing.
+     *
      * @param message The byte to be written or summed up.
      */
-    public static void log(byte message) {
+    public void log(byte message) {
         if (state != LoggerState.BYTE_STATE) {
             printBuffer();
             state = LoggerState.BYTE_STATE;
@@ -51,9 +63,10 @@ public class TypedSummingLogger {
 
     /**
      * The method prepares char for writing.
+     *
      * @param message The char to be written.
      */
-    public static void log(char message) {
+    public void log(char message) {
         printBuffer();
         currentChar = message;
         state = LoggerState.CHAR_STATE;
@@ -64,9 +77,10 @@ public class TypedSummingLogger {
      * If the length of the sequence is equal to 1, only String will be written.
      * If the length of the sequence is more than 1, the repetitive String and the length of the sequence will be
      * written.
+     *
      * @param message The String to be written.
      */
-    public static void log(String message) {
+    public void log(String message) {
         boolean isCurrentStateStringState = (state == LoggerState.STRING_STATE);
         if (!isCurrentStateStringState || !message.equals(currentString)) {
             printBuffer();
@@ -80,9 +94,10 @@ public class TypedSummingLogger {
 
     /**
      * The method prepares boolean for writing.
+     *
      * @param message The boolean to be written.
      */
-    public static void log(boolean message) {
+    public void log(boolean message) {
         printBuffer();
         currentBoolean = message;
         state = LoggerState.BOOLEAN_STATE;
@@ -90,9 +105,10 @@ public class TypedSummingLogger {
 
     /**
      * The method prepares object reference for writing.
+     *
      * @param message The object reference to be written.
      */
-    public static void log(Object message) {
+    public void log(Object message) {
         printBuffer();
         currentReference = message;
         state = LoggerState.REFERENCE_STATE;
@@ -100,9 +116,10 @@ public class TypedSummingLogger {
 
     /**
      * The method prepares array of ints for writing into console.
+     *
      * @param message The array of ints to be printed.
      */
-    public static void log(int[] message) {
+    public void log(int[] message) {
         printBuffer();
         currentArray = message;
         state = LoggerState.ARRAY_STATE;
@@ -111,11 +128,11 @@ public class TypedSummingLogger {
     /**
      * The method writes all that has been accumulated in the buffer into console.
      */
-    public static void close() {
+    public void close() {
         printBuffer();
     }
 
-    private static int modOverflowValue(int a, int b, int minValue, int maxValue) {
+    private int modOverflowValue(int a, int b, int minValue, int maxValue) {
         if (a > 0 && b > 0) {
             if (a > maxValue - b) {
                 overflowCount++;
@@ -130,47 +147,47 @@ public class TypedSummingLogger {
         return a + b;
     }
 
-    private static void printIntegerPrimitive(int sum, int overflowValue) {
-        if (abs(overflowCount) > 0) {
-            print(PRIMITIVE_PREFIX + overflowValue + " x " + overflowCount);
-        }
-        print(PRIMITIVE_PREFIX + sum);
-    }
 
-    private static void printBuffer() {
+    private void printBuffer() {
+        String stringToPrint = "";
         switch (state) {
             case INTEGER_STATE:
-                printIntegerPrimitive(sumInteger, Integer.MAX_VALUE);
+                stringToPrint = prepareIntegerPrimitiveForPrinting(sumInteger, Integer.MAX_VALUE);
                 break;
             case BYTE_STATE:
-                printIntegerPrimitive(sumByte, Byte.MAX_VALUE);
+                stringToPrint = prepareIntegerPrimitiveForPrinting(sumByte, Byte.MAX_VALUE);
                 break;
             case STRING_STATE:
-                String stringToPrint = prepareStringForPrinting(STRING_PREFIX + currentString);
-                print(stringToPrint);
+                stringToPrint = prepareStringForPrinting(STRING_PREFIX + currentString);
                 break;
             case ARRAY_STATE:
-                print(PRIMITIVES_ARRAY_PREFIX + arrayToString(currentArray));
+                stringToPrint = PRIMITIVES_ARRAY_PREFIX + arrayToString(currentArray);
                 break;
             case CHAR_STATE:
-                print(CHAR_PREFIX + currentChar);
+                stringToPrint = CHAR_PREFIX + currentChar;
                 break;
             case BOOLEAN_STATE:
-                print(PRIMITIVE_PREFIX + currentBoolean);
+                stringToPrint = PRIMITIVE_PREFIX + currentBoolean;
                 break;
             case REFERENCE_STATE:
-                print(REFERENCE_PREFIX + currentReference.toString());
+                stringToPrint = REFERENCE_PREFIX + currentReference.toString();
             default:
                 break;
         }
+        if (stringToPrint.length() > 0)
+            saver.print(stringToPrint);
         state = LoggerState.DEFAULT_STATE;
     }
 
-    private static void print(String message) {
-        System.out.println(message);
+    private String prepareIntegerPrimitiveForPrinting(int sum, int overflowValue) {
+        if (abs(overflowCount) > 0) {
+            return PRIMITIVE_PREFIX + overflowValue + " x " + overflowCount + System.lineSeparator()
+                    + PRIMITIVE_PREFIX + sum;
+        }
+        return PRIMITIVE_PREFIX + sum;
     }
 
-    private static String prepareStringForPrinting(String stringToPrint) {
+    private String prepareStringForPrinting(String stringToPrint) {
         if (subsequentStringsCount > 1) {
             stringToPrint += " (x" + subsequentStringsCount + ")";
         }
