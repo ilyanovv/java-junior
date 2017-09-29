@@ -2,17 +2,6 @@ package com.acme.edu;
 
 import static java.lang.Math.abs;
 
-enum LoggerState {
-    DEFAULT_STATE,
-    INTEGER_STATE,
-    BYTE_STATE,
-    STRING_STATE,
-    ARRAY_STATE,
-    CHAR_STATE,
-    BOOLEAN_STATE,
-    REFERENCE_STATE
-}
-
 public class TypedSummingLogger {
     public final static String PRIMITIVE_PREFIX = "primitive: ";
     public final static String REFERENCE_PREFIX = "reference: ";
@@ -23,7 +12,6 @@ public class TypedSummingLogger {
     private static int sumInteger;
     private static byte sumByte;
     private static int overflowCount;
-    private static int overflowValue;
     private static String currentString;
     private static int subsequentStringsCount;
     private static char currentChar;
@@ -135,27 +123,10 @@ public class TypedSummingLogger {
                 return a - minValue + b;
             }
         }
-        setOverflowValue(state, overflowCount);
         return a + b;
     }
 
-    private static void setOverflowValue(LoggerState state, int overflowCount) {
-        if (state == LoggerState.INTEGER_STATE) {
-            if (overflowCount >= 0) {
-                overflowValue = Integer.MAX_VALUE;
-            } else {
-                overflowValue = Integer.MIN_VALUE;
-            }
-        } else if (state == LoggerState.BYTE_STATE) {
-            if (overflowCount >= 0) {
-                overflowValue = Byte.MAX_VALUE;
-            } else {
-                overflowValue = Byte.MIN_VALUE;
-            }
-        }
-    }
-
-    private static void printIntegerPrimitive(int sum) {
+    private static void printIntegerPrimitive(int sum, int overflowValue) {
         if (abs(overflowCount) > 0) {
             print(PRIMITIVE_PREFIX + overflowValue + " x " + overflowCount);
         }
@@ -166,11 +137,11 @@ public class TypedSummingLogger {
     private static void printBuffer() {
         switch (state) {
             case INTEGER_STATE:
-                printIntegerPrimitive(sumInteger);
+                printIntegerPrimitive(sumInteger, Integer.MAX_VALUE);
                 sumInteger = 0;
                 break;
             case BYTE_STATE:
-                printIntegerPrimitive(sumByte);
+                printIntegerPrimitive(sumByte, Byte.MAX_VALUE);
                 sumByte = 0;
                 break;
             case STRING_STATE:
