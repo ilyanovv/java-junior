@@ -29,6 +29,8 @@ public class TypedSummingLogger {
         if (state != LoggerState.INTEGER_STATE) {
             printBuffer();
             state = LoggerState.INTEGER_STATE;
+            sumInteger = 0;
+            overflowCount = 0;
         }
         sumInteger = modOverflowValue(sumInteger, message, Integer.MIN_VALUE, Integer.MAX_VALUE);
     }
@@ -41,6 +43,8 @@ public class TypedSummingLogger {
         if (state != LoggerState.BYTE_STATE) {
             printBuffer();
             state = LoggerState.BYTE_STATE;
+            sumByte = 0;
+            overflowCount = 0;
         }
         sumByte = (byte) modOverflowValue(sumByte, message, Byte.MIN_VALUE, Byte.MAX_VALUE);
     }
@@ -131,18 +135,15 @@ public class TypedSummingLogger {
             print(PRIMITIVE_PREFIX + overflowValue + " x " + overflowCount);
         }
         print(PRIMITIVE_PREFIX + sum);
-        overflowCount = 0;
     }
 
     private static void printBuffer() {
         switch (state) {
             case INTEGER_STATE:
                 printIntegerPrimitive(sumInteger, Integer.MAX_VALUE);
-                sumInteger = 0;
                 break;
             case BYTE_STATE:
                 printIntegerPrimitive(sumByte, Byte.MAX_VALUE);
-                sumByte = 0;
                 break;
             case STRING_STATE:
                 String stringToPrint = prepareStringForPrinting(STRING_PREFIX + currentString);
