@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility {
     private final String NEW_LINE = System.lineSeparator();
+
     //region given
     @Before
     public void setUpSystemOut() throws IOException {
@@ -23,16 +24,16 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     }
     //endregion
 
-   @Test
+    @Test
     public void shouldLogIntegersArray() throws IOException {
         //region when
-        TypedSummingLogger.log(new int[] {-1, 0, 1});
+        TypedSummingLogger.log(new int[]{-1, 0, 1});
         TypedSummingLogger.close();
         //endregion
 
         //region then
         assertSysoutEquals(
-            "primitives array: {-1, 0, 1}" + NEW_LINE
+                "primitives array: {-1, 0, 1}" + NEW_LINE
         );
         //endregion
     }

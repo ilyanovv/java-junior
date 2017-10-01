@@ -10,6 +10,7 @@ import java.io.*;
 
 public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility {
     private final String NEW_LINE = System.lineSeparator();
+
     //region given
     @Before
     public void setUpSystemOut() throws IOException {
@@ -40,9 +41,9 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     @Test
     public void shouldLogByte() throws IOException {
         //region when
-        TypedSummingLogger.log((byte)1);
-        TypedSummingLogger.log((byte)0);
-        TypedSummingLogger.log((byte)-1);
+        TypedSummingLogger.log((byte) 1);
+        TypedSummingLogger.log((byte) 0);
+        TypedSummingLogger.log((byte) -1);
         TypedSummingLogger.close();
         //endregion
 

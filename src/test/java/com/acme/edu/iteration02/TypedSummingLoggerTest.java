@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility {
     private final String NEW_LINE = System.lineSeparator();
+
     //region given
     @Before
     public void setUpSystemOut() throws IOException {
@@ -35,10 +36,10 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
         //endregion
 
         //region then
-        assertSysoutContains(TypedSummingLogger.STRING_PREFIX + "str 1" + NEW_LINE);
-        assertSysoutContains(TypedSummingLogger.PRIMITIVE_PREFIX + "3" + NEW_LINE);
-        assertSysoutContains(TypedSummingLogger.STRING_PREFIX + "str 2" + NEW_LINE);
-        assertSysoutContains(TypedSummingLogger.PRIMITIVE_PREFIX + "0" + NEW_LINE);
+        assertSysoutContains("string: " + "str 1" + NEW_LINE);
+        assertSysoutContains("primitive: " + "3" + NEW_LINE);
+        assertSysoutContains("string: " + "str 2" + NEW_LINE);
+        assertSysoutContains("primitive: " + "0" + NEW_LINE);
         //endregion
     }
 
@@ -66,8 +67,8 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     public void shouldLogCorrectlyByteOverflowWhenSequentBytes() {
         //region when
         TypedSummingLogger.log("str 1");
-        TypedSummingLogger.log((byte)10);
-        TypedSummingLogger.log((byte)Byte.MAX_VALUE);
+        TypedSummingLogger.log((byte) 10);
+        TypedSummingLogger.log((byte) Byte.MAX_VALUE);
         TypedSummingLogger.log("str 2");
         TypedSummingLogger.log(0);
         TypedSummingLogger.close();
