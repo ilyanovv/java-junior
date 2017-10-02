@@ -1,6 +1,6 @@
 package com.acme.edu.message;
 
-import com.acme.edu.formatter.Formatter;
+import com.acme.edu.encoder.Encoder;
 import com.acme.edu.saver.Saver;
 
 import static java.lang.Math.abs;
@@ -9,59 +9,32 @@ public abstract class IntegerTypeMessage extends SummingMessage {
     private final String primitivePrefix = "primitive: ";
     protected int sum;
     protected int overflowCount;
-    private Formatter formatter;
-    private Saver saver;
 
+    /**
+     * @param message The int value of Message
+     */
     public IntegerTypeMessage(int message) {
         this.sum = message;
         this.overflowCount = 0;
     }
 
-    public IntegerTypeMessage(int message, Formatter formatter, Saver saver) {
+
+    public IntegerTypeMessage(int message, Saver saver, Encoder encoder) {
         this.sum = message;
         this.overflowCount = 0;
-        this.formatter = formatter;
         this.saver = saver;
+        this.encoder = encoder;
     }
 
     abstract int getOverflowValue();
 
-    @Override
-    public void save() {
-        saver.save(format());
-    }
-
-    public Formatter getFormatter() {
-        return formatter;
-    }
-
-    public void setFormatter(Formatter formatter) {
-        this.formatter = formatter;
-    }
-
-    public int getSum() {
-        return sum;
-    }
-
-    public void setSum(int sum) {
-        this.sum = sum;
-    }
-
-    public int getOverflowCount() {
-        return overflowCount;
-    }
-
-    public void setOverflowCount(int overflowCount) {
-        this.overflowCount = overflowCount;
-    }
-
     public String format() {
         String formattedString = "";
         if (abs(overflowCount) > 0) {
-            formattedString = formatter.format(primitivePrefix + getOverflowValue() + " x "
-                    + overflowCount + System.lineSeparator());
+            formattedString = primitivePrefix + getOverflowValue() + " x "
+                    + overflowCount + System.lineSeparator();
         }
-        formattedString += formatter.format(primitivePrefix + Integer.toString(sum));
+        formattedString += primitivePrefix + Integer.toString(sum);
         return formattedString;
     }
 

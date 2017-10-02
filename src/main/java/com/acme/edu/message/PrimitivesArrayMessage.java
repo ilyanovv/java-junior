@@ -1,22 +1,16 @@
 package com.acme.edu.message;
 
-import com.acme.edu.formatter.Formatter;
+import com.acme.edu.encoder.Encoder;
 import com.acme.edu.saver.Saver;
 
 public class PrimitivesArrayMessage extends SummingMessage implements Message {
     private final String primitivesArrayPrefix = "primitives array: ";
     private int[] message;
-    private Formatter formatter;
-    private Saver saver;
 
-    public PrimitivesArrayMessage(int[] message, Formatter formatter, Saver saver) {
+    public PrimitivesArrayMessage(int[] message, Saver saver, Encoder encoder) {
         this.message = message;
-        this.formatter = formatter;
         this.saver = saver;
-    }
-
-    public PrimitivesArrayMessage(int[] message) {
-        this.message = message;
+        this.encoder = encoder;
     }
 
     @Override
@@ -26,12 +20,7 @@ public class PrimitivesArrayMessage extends SummingMessage implements Message {
 
     @Override
     public String format() {
-        return formatter.format(primitivesArrayPrefix + arrayToString(message));
-    }
-
-    @Override
-    public void save() {
-        saver.save(format());
+        return primitivesArrayPrefix + arrayToString(message);
     }
 
     private String arrayToString(int[] array) {

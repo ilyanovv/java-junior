@@ -1,19 +1,17 @@
 package com.acme.edu.message;
 
 
-import com.acme.edu.formatter.Formatter;
+import com.acme.edu.encoder.Encoder;
 import com.acme.edu.saver.Saver;
 
-public class ReferenceMessage extends SummingMessage implements Message {
+public class ReferenceMessage extends SummingMessage {
     private final String referencePrefix = "reference: ";
     private Object message;
-    private Formatter formatter;
-    private Saver saver;
 
-    public ReferenceMessage(Object message, Formatter formatter, Saver saver) {
+    public ReferenceMessage(Object message, Saver saver, Encoder encoder) {
         this.message = message;
-        this.formatter = formatter;
         this.saver = saver;
+        this.encoder = encoder;
     }
 
     @Override
@@ -23,11 +21,7 @@ public class ReferenceMessage extends SummingMessage implements Message {
 
     @Override
     public String format() {
-        return formatter.format(referencePrefix + message);
+        return referencePrefix + message;
     }
 
-    @Override
-    public void save() {
-        saver.save(format());
-    }
 }
