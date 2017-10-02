@@ -3,8 +3,8 @@ package com.acme.edu.message;
 import com.acme.edu.formatter.Formatter;
 import com.acme.edu.saver.Saver;
 
-public class PrimitivesArrayMessage implements Message {
-    private final String PRIMITIVES_ARRAY_PREFIX = "primitives array: ";
+public class PrimitivesArrayMessage extends SummingMessage implements Message {
+    private final String primitivesArrayPrefix = "primitives array: ";
     private int[] message;
     private Formatter formatter;
     private Saver saver;
@@ -20,14 +20,13 @@ public class PrimitivesArrayMessage implements Message {
     }
 
     @Override
-    public void handle(Message previousMessage) {
-        if (previousMessage != null)
-            previousMessage.save();
+    protected void handleIfMessageTypesAreEqual(Message previousMessage) {
+        previousMessage.save();
     }
 
     @Override
     public String format() {
-        return formatter.format(PRIMITIVES_ARRAY_PREFIX + arrayToString(message));
+        return formatter.format(primitivesArrayPrefix + arrayToString(message));
     }
 
     @Override

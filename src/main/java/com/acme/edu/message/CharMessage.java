@@ -3,8 +3,8 @@ package com.acme.edu.message;
 import com.acme.edu.formatter.Formatter;
 import com.acme.edu.saver.Saver;
 
-public class CharMessage implements Message {
-    private final String CHAR_PREFIX = "char: ";
+public class CharMessage extends SummingMessage implements Message {
+    private final String charPrefix = "char: ";
     private char message;
     private Formatter formatter;
     private Saver saver;
@@ -16,14 +16,13 @@ public class CharMessage implements Message {
     }
 
     @Override
-    public void handle(Message previousMessage) {
-        if (previousMessage != null)
-            previousMessage.save();
+    protected void handleIfMessageTypesAreEqual(Message previousMessage) {
+        previousMessage.save();
     }
 
     @Override
     public String format() {
-        return formatter.format(CHAR_PREFIX + message);
+        return formatter.format(charPrefix + message);
     }
 
     @Override

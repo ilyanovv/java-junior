@@ -19,16 +19,11 @@ public class IntegerMessage extends IntegerTypeMessage {
     }
 
     @Override
-    public void handle(Message previousMessage) {
-        if (previousMessage == null) {
-            return;
-        }
+    protected void handleIfMessageTypesAreEqual(Message previousMessage) {
         if (previousMessage.getClass() == IntegerMessage.class) {
             overflowCount = ((IntegerMessage) previousMessage).overflowCount;
             sum = modOverflowValue(((IntegerMessage) previousMessage).sum, sum,
                     Integer.MIN_VALUE, Integer.MAX_VALUE);
-        } else {
-            previousMessage.save();
         }
     }
 }

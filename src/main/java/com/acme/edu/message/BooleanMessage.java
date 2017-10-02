@@ -3,8 +3,8 @@ package com.acme.edu.message;
 import com.acme.edu.formatter.Formatter;
 import com.acme.edu.saver.Saver;
 
-public class BooleanMessage implements Message {
-    private final String PRIMITIVE_PREFIX = "primitive: ";
+public class BooleanMessage extends SummingMessage implements Message {
+    private final String primitivePrefix = "primitive: ";
     private boolean message;
     private Formatter formatter;
     private Saver saver;
@@ -16,14 +16,13 @@ public class BooleanMessage implements Message {
     }
 
     @Override
-    public void handle(Message previousMessage) {
-        if (previousMessage != null)
-            previousMessage.save();
+    protected void handleIfMessageTypesAreEqual(Message previousMessage) {
+        previousMessage.save();
     }
 
     @Override
     public String format() {
-        return formatter.format(PRIMITIVE_PREFIX + message);
+        return formatter.format(primitivePrefix + message);
     }
 
     @Override

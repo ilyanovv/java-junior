@@ -14,8 +14,10 @@ public interface Message {
      */
     String format();
 
+
     /**
      * saves the Message
      */
     void save();
+
 }

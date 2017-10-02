@@ -5,8 +5,8 @@ import com.acme.edu.saver.Saver;
 
 import static java.lang.Math.abs;
 
-public abstract class IntegerTypeMessage implements Message {
-    private final String PRIMITIVE_PREFIX = "primitive: ";
+public abstract class IntegerTypeMessage extends SummingMessage {
+    private final String primitivePrefix = "primitive: ";
     protected int sum;
     protected int overflowCount;
     private Formatter formatter;
@@ -58,10 +58,10 @@ public abstract class IntegerTypeMessage implements Message {
     public String format() {
         String formattedString = "";
         if (abs(overflowCount) > 0) {
-            formattedString = formatter.format(PRIMITIVE_PREFIX + getOverflowValue() + " x "
+            formattedString = formatter.format(primitivePrefix + getOverflowValue() + " x "
                     + overflowCount + System.lineSeparator());
         }
-        formattedString += formatter.format(PRIMITIVE_PREFIX + Integer.toString(sum));
+        formattedString += formatter.format(primitivePrefix + Integer.toString(sum));
         return formattedString;
     }
 

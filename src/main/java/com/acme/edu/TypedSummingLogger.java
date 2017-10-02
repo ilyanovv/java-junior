@@ -1,5 +1,9 @@
 package com.acme.edu;
 
+import com.acme.edu.formatter.SimpleFormatter;
+import com.acme.edu.message.*;
+import com.acme.edu.saver.ConsoleSaver;
+
 import static java.lang.Math.abs;
 
 public class TypedSummingLogger {
@@ -11,7 +15,8 @@ public class TypedSummingLogger {
      * @param message The int to be written or summed up.
      */
     public static void log(int message) {
-        loggerController.log(message);
+        Message currentMessage = new IntegerMessage(message, new SimpleFormatter(), new ConsoleSaver());
+        loggerController.log(currentMessage);
     }
 
     /**
@@ -20,7 +25,8 @@ public class TypedSummingLogger {
      * @param message The byte to be written or summed up.
      */
     public static void log(byte message) {
-        loggerController.log(message);
+        Message currentMessage = new ByteMessage(message, new SimpleFormatter(), new ConsoleSaver());
+        loggerController.log(currentMessage);
     }
 
     /**
@@ -29,7 +35,8 @@ public class TypedSummingLogger {
      * @param message The char to be written.
      */
     public static void log(char message) {
-        loggerController.log(message);
+        Message currentMessage = new CharMessage(message, new SimpleFormatter(), new ConsoleSaver());
+        loggerController.log(currentMessage);
     }
 
     /**
@@ -41,7 +48,8 @@ public class TypedSummingLogger {
      * @param message The String to be written.
      */
     public static void log(String message) {
-        loggerController.log(message);
+        Message currentMessage = new StringMessage(message, new SimpleFormatter(), new ConsoleSaver());
+        loggerController.log(currentMessage);
     }
 
     /**
@@ -50,7 +58,8 @@ public class TypedSummingLogger {
      * @param message The boolean to be written.
      */
     public static void log(boolean message) {
-        loggerController.log(message);
+        Message currentMessage = new BooleanMessage(message, new SimpleFormatter(), new ConsoleSaver());
+        loggerController.log(currentMessage);
     }
 
     /**
@@ -59,7 +68,8 @@ public class TypedSummingLogger {
      * @param message The object reference to be written.
      */
     public static void log(Object message) {
-        loggerController.log(message);
+        Message currentMessage = new ReferenceMessage(message, new SimpleFormatter(), new ConsoleSaver());
+        loggerController.log(currentMessage);
     }
 
     /**
@@ -68,7 +78,8 @@ public class TypedSummingLogger {
      * @param message The array of ints to be printed.
      */
     public static void log(int[] message) {
-        loggerController.log(message);
+        Message currentMessage = new PrimitivesArrayMessage(message, new SimpleFormatter(), new ConsoleSaver());
+        loggerController.log(currentMessage);
     }
 
     /**

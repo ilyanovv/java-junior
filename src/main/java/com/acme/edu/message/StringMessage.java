@@ -3,8 +3,8 @@ package com.acme.edu.message;
 import com.acme.edu.formatter.Formatter;
 import com.acme.edu.saver.Saver;
 
-public class StringMessage implements Message {
-    private final String STRING_PREFIX = "string: ";
+public class StringMessage extends SummingMessage implements Message {
+    private final String stringPrefix = "string: ";
     private String messageString;
     private int subsequentStringsCount;
     private Formatter formatter;
@@ -23,26 +23,21 @@ public class StringMessage implements Message {
     }
 
     @Override
-    public void handle(Message previousMessage) {
-        if (previousMessage == null) {
-            return;
-        }
+    protected void handleIfMessageTypesAreEqual(Message previousMessage) {
         if (previousMessage.getClass() == StringMessage.class) {
             if (messageString.equals(((StringMessage) previousMessage).messageString)) {
                 subsequentStringsCount = ((StringMessage) previousMessage).subsequentStringsCount + 1;
             } else {
                 previousMessage.save();
             }
-        } else {
-            previousMessage.save();
         }
     }
 
     @Override
     public String format() {
         if (subsequentStringsCount > 1) {
-            return formatter.format(STRING_PREFIX + messageString + " (x" + subsequentStringsCount + ")");
-        } else return formatter.format(STRING_PREFIX + messageString);
+            return formatter.format(stringPrefix + messageString + " (x" + subsequentStringsCount + ")");
+        } else return formatter.format(stringPrefix + messageString);
     }
 
     @Override
