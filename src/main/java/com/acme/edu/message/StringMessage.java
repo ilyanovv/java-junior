@@ -1,6 +1,7 @@
 package com.acme.edu.message;
 
 import com.acme.edu.encoder.Encoder;
+import com.acme.edu.saver.SaveNotSuccessfulException;
 import com.acme.edu.saver.Saver;
 
 public class StringMessage extends SummingMessage implements Message {
@@ -16,7 +17,7 @@ public class StringMessage extends SummingMessage implements Message {
     }
 
     @Override
-    protected void handleIfMessageTypesAreEqual(Message previousMessage) {
+    protected void handleIfMessageTypesAreEqual(Message previousMessage) throws SaveNotSuccessfulException {
         StringMessage castedPreviousMessage = (StringMessage) previousMessage;
         if (messageString.equals(castedPreviousMessage.messageString)) {
             subsequentStringsCount = castedPreviousMessage.subsequentStringsCount + 1;

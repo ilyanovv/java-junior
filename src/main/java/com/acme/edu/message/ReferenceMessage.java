@@ -2,6 +2,7 @@ package com.acme.edu.message;
 
 
 import com.acme.edu.encoder.Encoder;
+import com.acme.edu.saver.SaveNotSuccessfulException;
 import com.acme.edu.saver.Saver;
 
 public class ReferenceMessage extends SummingMessage {
@@ -15,7 +16,7 @@ public class ReferenceMessage extends SummingMessage {
     }
 
     @Override
-    protected void handleIfMessageTypesAreEqual(Message previousMessage) {
+    protected void handleIfMessageTypesAreEqual(Message previousMessage) throws SaveNotSuccessfulException {
         previousMessage.save();
     }
 

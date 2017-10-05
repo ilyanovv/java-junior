@@ -1,6 +1,7 @@
 package com.acme.edu.message;
 
 import com.acme.edu.encoder.Encoder;
+import com.acme.edu.saver.SaveNotSuccessfulException;
 import com.acme.edu.saver.Saver;
 
 public abstract class SummingMessage implements Message {
@@ -8,7 +9,7 @@ public abstract class SummingMessage implements Message {
     protected Encoder encoder;
 
     @Override
-    public void handle(Message previousMessage) {
+    public void handle(Message previousMessage) throws SaveNotSuccessfulException {
         if (previousMessage == null) {
             return;
         }
@@ -20,10 +21,10 @@ public abstract class SummingMessage implements Message {
     }
 
     @Override
-    public void save() {
+    public void save() throws SaveNotSuccessfulException {
         saver.save(encoder.encode(format()));
     }
 
-    abstract protected void handleIfMessageTypesAreEqual(Message previousMessage);
+    abstract protected void handleIfMessageTypesAreEqual(Message previousMessage) throws SaveNotSuccessfulException;
 
 }

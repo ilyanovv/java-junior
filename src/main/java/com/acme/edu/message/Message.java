@@ -1,12 +1,14 @@
 package com.acme.edu.message;
 
+import com.acme.edu.saver.SaveNotSuccessfulException;
+
 public interface Message {
     /**
      * The method handles the Message
      *
      * @param previousMessage Message that was handled before this Message
      */
-    void handle(Message previousMessage);
+    void handle(Message previousMessage) throws SaveNotSuccessfulException;
 
     /**
      * The method formats the Message
@@ -18,6 +20,6 @@ public interface Message {
     /**
      * saves the Message
      */
-    void save();
+    void save() throws SaveNotSuccessfulException;
 
 }
