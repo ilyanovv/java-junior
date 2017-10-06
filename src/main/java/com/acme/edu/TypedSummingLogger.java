@@ -102,14 +102,4 @@ public class TypedSummingLogger {
             throw new LoggerException(LoggerException.NULL_POINTER_ARGUMENT_MESSAGE, new IllegalArgumentException());
         }
     }
-
-    public static void main(String[] args) {
-        String str = null;
-        try {
-            log(str);
-        } catch (LoggerException e) {
-            e.printStackTrace();
-        }
-    }
-
 }
