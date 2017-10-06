@@ -6,12 +6,10 @@ import com.acme.edu.SysoutCaptureAndAssertionAbility;
 import com.acme.edu.TypedSummingLogger;
 import com.acme.edu.encoder.SimpleEncoder;
 import com.acme.edu.message.IntegerMessage;
-import com.acme.edu.saver.ExceptionSaver;
 import com.acme.edu.saver.SaveNotSuccessfulException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import sun.rmi.runtime.Log;
 
 import java.io.IOException;
 
@@ -42,7 +40,9 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     public void shouldCatchLoggerExceptionCausedBySaveNotSuccessfulException() throws LoggerException {
         //region when
         LoggerController loggerController = new LoggerController();
-        loggerController.log(new IntegerMessage(0, new ExceptionSaver(), new SimpleEncoder()));
+        loggerController.log(new IntegerMessage(0, message -> {
+            throw new SaveNotSuccessfulException(SaveNotSuccessfulException.SAVE_NOT_SUCCESFUL_MESSAGE);
+        }, new SimpleEncoder()));
         loggerController.close();
         //end region
     }
