@@ -1,5 +1,6 @@
 package com.acme.edu.iteration01;
 
+import com.acme.edu.LoggerException;
 import com.acme.edu.TypedSummingLogger;
 import com.acme.edu.SysoutCaptureAndAssertionAbility;
 import org.junit.After;
@@ -25,7 +26,7 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     //endregion
 
     @Test
-    public void shouldLogInteger() throws IOException {
+    public void shouldLogInteger() throws IOException, LoggerException {
         //region when
         TypedSummingLogger.log(1);
         TypedSummingLogger.log(0);
@@ -39,7 +40,7 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     }
 
     @Test
-    public void shouldLogByte() throws IOException {
+    public void shouldLogByte() throws IOException, LoggerException {
         //region when
         TypedSummingLogger.log((byte) 1);
         TypedSummingLogger.log((byte) 0);
@@ -53,7 +54,7 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     }
 
     @Test
-    public void shouldLogChar() throws IOException {
+    public void shouldLogChar() throws IOException, LoggerException {
         //region when
         TypedSummingLogger.log('a');
         TypedSummingLogger.log('b');
@@ -68,7 +69,7 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     }
 
     @Test
-    public void shouldLogString() throws IOException {
+    public void shouldLogString() throws IOException, LoggerException {
         //region when
         TypedSummingLogger.log("test string 1");
         TypedSummingLogger.log("other str");
@@ -83,7 +84,7 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     }
 
     @Test
-    public void shouldLogBoolean() throws IOException {
+    public void shouldLogBoolean() throws IOException, LoggerException {
         //region when
         TypedSummingLogger.log(true);
         TypedSummingLogger.log(false);
@@ -98,7 +99,7 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     }
 
     @Test
-    public void shouldLogReference() throws IOException {
+    public void shouldLogReference() throws IOException, LoggerException {
         //region when
         TypedSummingLogger.log(new Object());
         TypedSummingLogger.close();

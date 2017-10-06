@@ -1,5 +1,6 @@
 package com.acme.edu.iteration03;
 
+import com.acme.edu.LoggerException;
 import com.acme.edu.TypedSummingLogger;
 import com.acme.edu.SysoutCaptureAndAssertionAbility;
 import org.junit.After;
@@ -25,7 +26,7 @@ public class TypedSummingLoggerTest implements SysoutCaptureAndAssertionAbility 
     //endregion
 
     @Test
-    public void shouldLogIntegersArray() throws IOException {
+    public void shouldLogIntegersArray() throws LoggerException {
         //region when
         TypedSummingLogger.log(new int[]{-1, 0, 1});
         TypedSummingLogger.close();

@@ -3,6 +3,7 @@ package com.acme.edu;
 import com.acme.edu.encoder.SimpleEncoder;
 import com.acme.edu.message.*;
 import com.acme.edu.saver.ConsoleSaver;
+import com.acme.edu.saver.ExceptionSaver;
 
 import static java.lang.Math.abs;
 
@@ -14,7 +15,8 @@ public class TypedSummingLogger {
      *
      * @param message The int to be written or summed up.
      */
-    public static void log(int message) {
+    public static void log(int message) throws LoggerException {
+        validate(message);
         Message currentMessage = new IntegerMessage(message, new ConsoleSaver(), new SimpleEncoder());
         loggerController.log(currentMessage);
     }
@@ -24,7 +26,8 @@ public class TypedSummingLogger {
      *
      * @param message The byte to be written or summed up.
      */
-    public static void log(byte message) {
+    public static void log(byte message) throws LoggerException {
+        validate(message);
         Message currentMessage = new ByteMessage(message, new ConsoleSaver(), new SimpleEncoder());
         loggerController.log(currentMessage);
     }
@@ -34,7 +37,8 @@ public class TypedSummingLogger {
      *
      * @param message The char to be written.
      */
-    public static void log(char message) {
+    public static void log(char message) throws LoggerException {
+        validate(message);
         Message currentMessage = new CharMessage(message, new ConsoleSaver(), new SimpleEncoder());
         loggerController.log(currentMessage);
     }
@@ -47,7 +51,8 @@ public class TypedSummingLogger {
      *
      * @param message The String to be written.
      */
-    public static void log(String message) {
+    public static void log(String message) throws LoggerException {
+        validate(message);
         Message currentMessage = new StringMessage(message, new ConsoleSaver(), new SimpleEncoder());
         loggerController.log(currentMessage);
     }
@@ -57,7 +62,8 @@ public class TypedSummingLogger {
      *
      * @param message The boolean to be written.
      */
-    public static void log(boolean message) {
+    public static void log(boolean message) throws LoggerException {
+        validate(message);
         Message currentMessage = new BooleanMessage(message, new ConsoleSaver(), new SimpleEncoder());
         loggerController.log(currentMessage);
     }
@@ -67,7 +73,8 @@ public class TypedSummingLogger {
      *
      * @param message The object reference to be written.
      */
-    public static void log(Object message) {
+    public static void log(Object message) throws LoggerException {
+        validate(message);
         Message currentMessage = new ReferenceMessage(message, new ConsoleSaver(), new SimpleEncoder());
         loggerController.log(currentMessage);
     }
@@ -77,7 +84,8 @@ public class TypedSummingLogger {
      *
      * @param message The array of ints to be printed.
      */
-    public static void log(int[] message) {
+    public static void log(int[] message) throws LoggerException {
+        validate(message);
         Message currentMessage = new PrimitivesArrayMessage(message, new ConsoleSaver(), new SimpleEncoder());
         loggerController.log(currentMessage);
     }
@@ -85,8 +93,23 @@ public class TypedSummingLogger {
     /**
      * The method writes all that has been accumulated in the buffer into console.
      */
-    public static void close() {
+    public static void close() throws LoggerException {
         loggerController.close();
+    }
+
+    private static void validate(Object argument) throws LoggerException {
+        if (argument == null){
+            throw new LoggerException(LoggerException.NULL_POINTER_ARGUMENT_MESSAGE, new IllegalArgumentException());
+        }
+    }
+
+    public static void main(String[] args) {
+        String str = null;
+        try {
+            log(str);
+        } catch (LoggerException e) {
+            e.printStackTrace();
+        }
     }
 
 }

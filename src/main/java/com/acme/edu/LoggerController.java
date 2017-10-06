@@ -11,11 +11,11 @@ public class LoggerController {
      *
      * @param currentMessage The Message to be logged
      */
-    public void log(Message currentMessage) {
+    public void log(Message currentMessage) throws LoggerException {
         try {
             currentMessage.handle(previousMessage);
         } catch (SaveNotSuccessfulException e) {
-            e.printStackTrace();
+            throw new LoggerException(e);
         }
         previousMessage = currentMessage;
     }
@@ -23,11 +23,11 @@ public class LoggerController {
     /**
      * The method writes all that has been accumulated in the buffer.
      */
-    public void close() {
+    public void close() throws LoggerException {
         try {
             previousMessage.save();
         } catch (SaveNotSuccessfulException e) {
-            e.printStackTrace();
+            throw new LoggerException(e);
         }
         previousMessage = null;
     }
